@@ -31,8 +31,8 @@ private:
 
 public:
 
-	UPROPERTY(EditAnywhere)
-	float PrejectileSpeed = 1000.0f;
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float LaunchSpeed = 100000.0f;	//sencible starting value of 1000 m/s
 
 	void AimAt(FVector HitLocation);
 
