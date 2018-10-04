@@ -4,6 +4,7 @@
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Public/TankBarrel.h"
+#include "Public/TankTurret.h"
 #include "Kismet/GameplayStatics.h"
 #include "Engine/World.h"
 
@@ -21,6 +22,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 {
 	if (!Barrel) { return; }
+	if (!Turret) { return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -43,6 +45,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//UE_LOG(LogTemp, Warning, TEXT("%s is aming at %s"),*GetOwner()->GetName(),*AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 		auto Time = GetWorld()->GetTimeSeconds();
 		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution Found"), Time);
 	}
@@ -57,6 +60,10 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	Turret = TurretToSet;
+}
 
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
@@ -64,9 +71,18 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	//Work out current barel rotation and Aim direction
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
-	auto DeltaRotator = AimAsRotator - BarrelRotator;
+	auto DeltaBarrelRotator = AimAsRotator - BarrelRotator;
 	///UE_LOG(LogTemp, Warning, TEXT("Aim rotator: %s"), *AimAsRotator.ToString());
 
-	Barrel->Elevate(DeltaRotator.Pitch);
+	Barrel->Elevate(DeltaBarrelRotator.Pitch);
+	
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection)
+{
+	auto AimAsRotator = AimDirection.Rotation();
+	auto TurretRotator = Turret->GetForwardVector().Rotation();
+	auto DeltaTurretRotator = AimAsRotator - TurretRotator;
+	Turret->Rotate(DeltaTurretRotator.Yaw);// DeltaTurretRotator.Roll);
 }
 
