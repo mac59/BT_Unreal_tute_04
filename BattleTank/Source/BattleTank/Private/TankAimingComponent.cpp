@@ -39,20 +39,20 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 				0,
 				0,
 				ESuggestProjVelocityTraceOption::DoNotTrace	///without do not trace this gets inconsistant
-			)
+				)
 		)
 	{
 		FVector AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//UE_LOG(LogTemp, Warning, TEXT("%s is aming at %s"),*GetOwner()->GetName(),*AimDirection.ToString());
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowards(AimDirection);
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution Found"), Time);
+		//auto Time = GetWorld()->GetTimeSeconds();
+		//UE_LOG(LogTemp, Warning, TEXT("%f: Aim Solution Found"), Time);
 	}
 	else
 	{
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: No Aim Solve Found"), Time);
+		//auto Time = GetWorld()->GetTimeSeconds();
+		//UE_LOG(LogTemp, Warning, TEXT("%f: No Aim Solve Found"), Time);
 	}
 }
 
