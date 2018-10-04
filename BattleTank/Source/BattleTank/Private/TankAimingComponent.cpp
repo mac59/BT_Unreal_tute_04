@@ -36,7 +36,7 @@ void UTankAimingComponent::AimAt(FVector WorldSpaceAim, float LaunchSpeed)
 				false,
 				0,
 				0,
-				ESuggestProjVelocityTraceOption::DoNotTrace
+				ESuggestProjVelocityTraceOption::DoNotTrace	///without do not trace this gets inconsistant
 			)
 		)
 	{
