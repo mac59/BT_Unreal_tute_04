@@ -32,7 +32,6 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = Setup)
 	TAssetSubclassOf<AProjectile> ProjectileBlueprint;
-
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000.0f;	//sencible starting value of 1000 m/s
 
