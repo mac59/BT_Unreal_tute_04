@@ -36,6 +36,10 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Firing")
 	float LaunchSpeed = 4000.0f;	//sencible starting value of 1000 m/s
 
+	UPROPERTY(EditAnywhere, Category = "Firing")
+	float ReloadTimeSeconds = 3.0f;
+
+	double LastFireTime = 0;
 
 	//local barrel reference for spawning projectile
 	UTankBarrel* Barrel = nullptr;
